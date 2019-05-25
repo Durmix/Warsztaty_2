@@ -27,7 +27,7 @@ public class User {
 
     public void saveToDB(Connection conn) throws SQLException {
         if (this.id == 0) {
-            String query = "INSERT INTO users(username, email, password) VALUES(?, ?, ?)";
+            String query = "INSERT INTO User(username, email, password) VALUES(?, ?, ?)";
             PreparedStatement preparedStatement
                     = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, this.username);
@@ -39,7 +39,7 @@ public class User {
                 this.id = rs.getInt(1);
             }
         } else {
-            String query = "UPDATE users SET username = ?, email = ?, password = ? where id = ?";
+            String query = "UPDATE User SET username = ?, email = ?, password = ? WHERE id = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, this.username);
             preparedStatement.setString(2, this.email);
@@ -70,16 +70,16 @@ public class User {
     }
 
     static public User loadUserById(Connection conn, int id) throws SQLException {
-        String query = "SELECT * FROM users WHERE id = ?";
+        String query = "SELECT * FROM User WHERE id = ?";
         PreparedStatement preparedStatement = conn.prepareStatement(query);
         preparedStatement.setInt(1, id);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
+        ResultSet rs = preparedStatement.executeQuery();
+        if (rs.next()) {
             User loadedUser = new User();
-            loadedUser.id = resultSet.getInt("id");
-            loadedUser.username = resultSet.getString("username");
-            loadedUser.password = resultSet.getString("password");
-            loadedUser.email = resultSet.getString("email");
+            loadedUser.id = rs.getInt("id");
+            loadedUser.username = rs.getString("username");
+            loadedUser.password = rs.getString("password");
+            loadedUser.email = rs.getString("email");
             return loadedUser;
         }
         return null;
@@ -87,15 +87,15 @@ public class User {
 
     static public User[] loadAllUsers(Connection conn) throws SQLException {
         ArrayList<User> users = new ArrayList<>();
-        String query = "SELECT * FROM users";
+        String query = "SELECT * FROM User";
         PreparedStatement preparedStatement = conn.prepareStatement(query);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
+        ResultSet rs = preparedStatement.executeQuery();
+        while (rs.next()) {
             User loadedUser = new User();
-            loadedUser.id = resultSet.getInt("id");
-            loadedUser.username = resultSet.getString("username");
-            loadedUser.password = resultSet.getString("password");
-            loadedUser.email = resultSet.getString("email");
+            loadedUser.id = rs.getInt("id");
+            loadedUser.username = rs.getString("username");
+            loadedUser.password = rs.getString("password");
+            loadedUser.email = rs.getString("email");
             users.add(loadedUser);
         }
         User[] uArray = new User[users.size()];
@@ -105,7 +105,7 @@ public class User {
 
     public void delete(Connection conn) throws SQLException {
         if (this.id != 0) {
-            String query = "DELETE FROM users WHERE id = ?";
+            String query = "DELETE FROM User WHERE id = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setInt(1, this.id);
             preparedStatement.executeUpdate();
