@@ -89,5 +89,8 @@ public class Solution {
         }
     }
 
-    static public Solution 
+    static public Solution loadAllByUserId(Connection conn, int id) {
+        String query = "SELECT * FROM Solutions as s JOIN User as u on s.user_id = u.id WHERE user_id = ?";
+        
+    }
 }
