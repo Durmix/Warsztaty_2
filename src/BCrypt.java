@@ -1,4 +1,4 @@
-package warsztaty;
+package src;
 
 // Copyright (c) 2006 Damien Miller <djm@mindrot.org>
 //

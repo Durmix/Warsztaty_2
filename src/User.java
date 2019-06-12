@@ -1,4 +1,4 @@
-package warsztaty;
+package src;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -115,8 +115,9 @@ public class User {
 
     static public User[] loadAllByGroupId(Connection conn, int id) throws SQLException {
         ArrayList<User> users = new ArrayList<>();
-        String query = "SELECT * FROM User";
+        String query = "SELECT * FROM User WHERE group_id = ?";
         PreparedStatement preparedStatement = conn.prepareStatement(query);
+        preparedStatement.setInt(1,id);
         ResultSet rs = preparedStatement.executeQuery();
         while (rs.next()) {
             User loadedUser = new User();

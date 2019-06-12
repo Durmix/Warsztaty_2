@@ -1,4 +1,4 @@
-package warsztaty;
+package src;
 
 import java.sql.*;
 import java.util.ArrayList;
